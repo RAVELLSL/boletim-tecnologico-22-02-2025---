@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boletim Tecnológico</title>
+
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f7f7f7;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: linear-gradient(135deg, #333, #000);
+      color: white;
+      padding: 30px 0;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    header h1 {
+      font-size: 36px;
+      margin: 0;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .container {
+      width: 90%;
+      margin: auto;
+      padding: 20px 0;
+    }
+
+    .edition-info {
+      text-align: center;
+      font-size: 16px;
+      color: #666;
+      margin: 15px 0;
+    }
+
+    .section-title {
+      color: #333;
+      font-size: 28px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #333;
+      padding-bottom: 5px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    /* Configuração das seções para centralizar os cards */
+    .main-section, .innovation-section, .deu-ruim-section, .news-section {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center; /* Centraliza os cards horizontalmente */
+      gap: 20px;
+      margin: 30px 0;
+    }
+
+    .card {
+      background-color: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 300px; /* Define uma largura fixa para os cards */
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    .card h2 {
+      font-size: 18px;
+      color: #333;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+      margin-top: 30px;
+    }
+
+    footer p {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    /* Estilos para os modais */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 20px;
+      border-radius: 12px;
+      width: 60%;
+      height: 80%;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    .modal-content img {
+      width: 80%;
+      height: auto;
+      margin: 20px auto;
+      display: block;
+      border-radius: 10px;
+    }
+
+    .modal-content p {
+      font-size: 16px;
+      line-height: 1.8;
+      color: #555;
+      text-align: justify;
+      margin-top: 20px;
+    }
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      color: #333;
+      font-size: 30px;
+      cursor: pointer;
+    }
+
+    /* Estilos responsivos */
+    @media (max-width: 1024px) {
+      .modal-content {
+        width: 80%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .modal-content {
+        width: 80%;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .main-section, .innovation-section, .deu-ruim-section, .news-section {
+        flex-direction: column;
+        align-items: center; /* Centraliza os cards em telas pequenas */
+      }
+
+      .card h2 {
+        font-size: 16px;
+      }
+
+      .card img {
+        height: auto;
+        margin-bottom: 10px;
+      }
+
+      .section-title {
+        font-size: 24px;
+      }
+
+      header h1 {
+        font-size: 28px;
+      }
+
+      .modal-content {
+        width: 95%;
+        height: 90%;
+        padding: 15px;
+      }
+
+      .modal-content h2 {
+        font-size: 20px;
+      }
+
+      .modal-content p {
+        font-size: 16px;
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Boletim Tecnológico</h1>
+  </header>
+
+  <div class="edition-info">
+    <p>Edição de 22/02/2025</p>
+  </div>
+
+  <!-- Seção: Inteligência Artificial -->
+  <h2 class="section-title">Inteligência Artificial</h2>
+  <div class="main-section">
+    <!-- Card -->
+    <div class="card" id="card1">
+      <img src="https://clickpetroleoegas.com.br/wp-content/uploads/2025/02/000-grok-3.webp" 
+           alt="Grok 3: “a IA mais inteligente do mundo”">
+      <h2>Grok 3:<br>“a IA mais inteligente do mundo”</h2>
+    </div>
+
+   <!-- Card -->
+   <div class="card" id="card2">
+    <img src="https://img.odcdn.com.br/wp-content/uploads/2025/02/perplexity-1920x1080.jpg" 
+         alt="Perplexity lança ferramenta de pesquisa aprofundada com IA">
+    <h2>Perplexity lança ferramenta de pesquisa aprofundada com IA</h2>
+  </div>
+
+  <!-- Card -->
+  <div class="card" id="card3">
+    <img src="https://tm.ibxk.com.br/2025/02/18/18200550051015.jpg?ims=1280x480" 
+         alt="Google lança Whisk IA no Brasil">
+    <h2>Google lança Whisk IA no Brasil</h2>
+  </div>
+
+  <!-- Card -->
+  <div class="card" id="card4">
+    <img src="https://img.odcdn.com.br/wp-content/uploads/2025/02/chatgpt_logo-1920x1080.jpg" 
+         alt="OpenAI flexibiliza diretrizes do ChatGPT e promete menos censura">
+    <h2>OpenAI flexibiliza diretrizes do ChatGPT e promete menos censura</h2>
+  </div>  
+  </div>
+
+
+
+  <!-- Seção: Inovação Tecnológica -->
+  <h2 class="section-title">Inovação Tecnológica</h2>
+  <div class="innovation-section">
+    <!-- Card  -->
+    <div class="card" id="card5">
+        <img src="https://t.ctcdn.com.br/hu_P5DKV3FvhquFtRq-uY8eAf80=/1024x576/smart/i982259.png" 
+             alt="Primeiro teletransporte quântico entre computadores é feito no mundo">
+        <h2>Primeiro teletransporte quântico entre computadores é feito no mundo</h2>
+      </div>
+
+      <!-- Card  -->
+    <div class="card" id="card6">
+        <img src="https://f.i.uol.com.br/fotografia/2025/02/13/173948782867ae7a540875d_1739487828_3x2_lg.jpg" 
+             alt="Arm lançará seu próprio chip revolucionando a indústria de semicondutores">
+        <h2>Arm lançará seu próprio chip e revolucionará a indústria de semicondutores</h2>
+      </div>
+
+      <!-- Card  -->
+    <div class="card" id="card7">
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2024/12/bateria-carro-eletrico-1536x868.jpg" 
+             alt="Esta ‘injeção’ pode aumentar a vida útil das baterias">
+        <h2>Novo conceito de ‘injeção’ pode aumentar a vida útil das baterias</h2>
+      </div>          
+  </div>
+
+
+
+  <!-- Seção: Deu Ruim -->
+  <h2 class="section-title">Deu Ruim</h2>
+  <div class="deu-ruim-section">
+    <!-- Card  -->
+    <div class="card" id="card8">
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/02/IA-perigo-1920x1080.jpg" 
+             alt="Ex-CEO do Google alerta para uso mal-intencionado da IA">
+        <h2>Ex-CEO do Google alerta para uso mal-intencionado da IA</h2>
+      </div>
+
+       <!-- Card  -->
+    <div class="card" id="card9">
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/02/Capa-Videogame-1920x1000.jpg" 
+             alt="Sedentarismo digital: quando ficar parado também pesa na mente">
+        <h2>Sedentarismo digital: quando ficar parado também pesa na mente</h2>
+      </div>
+
+       <!-- Card  -->
+    <div class="card" id="card10">
+        <img src="https://tm.ibxk.com.br/2025/02/17/17092843444055.jpg?ims=1280x480" 
+             alt="Nova Alexa com IA pode ser adiada de novo por ainda dar respostas erradas">
+        <h2>Nova Alexa com IA pode ser adiada de novo por ainda dar respostas erradas</h2>
+      </div>         
+  </div>
+
+
+
+  <!-- Seção: Notícias Variadas -->
+  <h2 class="section-title">Notícias Variadas</h2>
+  <div class="news-section">
+    <!-- Card  -->
+    <div class="card" id="card11">
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/01/intel-1920x1080.jpg" 
+             alt="Rivais da Intel podem dividir mercado de chips em dois">
+        <h2>Rivais da Intel podem dividir mercado de chips em dois</h2>
+      </div>
+
+      <!-- Card  -->
+    <div class="card" id="card12">
+        <img src="https://f.i.uol.com.br/fotografia/2025/01/09/1736441429677ffe5595bb4_1736441429_3x2_lg.jpg" 
+             alt="Evangelistas da IA chegam ao país com promessas de vida eterna e utopia tecnológica">
+        <h2>Evangelistas da IA chegam ao país com promessas de vida eterna e utopia tecnológica</h2>
+      </div>
+
+      <!-- Card  -->
+    <div class="card" id="card13">
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/02/Majorana-1-009-4000px-1920x1080.jpg" 
+             alt="Majorana 1: conheça o novo chip quântico da Microsoft que pode mudar tudo">
+        <h2>Majorana 1: conheça o novo chip quântico da Microsoft que pode mudar tudo</h2>
+      </div>              
+      </div>
+  </div>
+
+  <!-- ========================== 
+       MÓDULOS (MODAIS) 
+       ========================== -->
+
+<!-- Modal 1 -->
+<div id="modal1" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Grok 3: Elon Musk revela nova IA e promete desempenho superior</h2>
+        <img src="https://clickpetroleoegas.com.br/wp-content/uploads/2025/02/000-grok-3.webp" alt="Imagem representativa sobre o Grok 3 de Elon Musk">
+        
+        <p>Na madrugada desta terça-feira (18), Elon Musk apresentou o Grok 3, nova versão da inteligência artificial da xAI, promovida como "a mais inteligente do mundo". O anúncio foi feito durante uma transmissão ao vivo no X, com mais de 3,3 milhões de espectadores.</p>
+
+        <strong>Desempenho e melhorias</strong><br><br>
+
+        <p>Musk destacou que o Grok 3 foi desenvolvido com dez vezes mais poder computacional em relação à versão anterior. Nos testes de benchmark da xAI, o modelo se mostrou superior a concorrentes como ChatGPT-4o, Gemini-2 Pro e Claude 3.5 Sonnet, especialmente em problemas de matemática, física e biologia.</p>
+
+        <p>Outro diferencial foi o Chatbot Arena, um teste de crowdsourcing onde diferentes IAs competem de forma anônima. Sob o codinome “chocolate”, o Grok 3 venceu seus rivais, superando até o modelo Gemini-2.0 do Google.</p>
+
+        <strong>Novos recursos</strong><br><br>
+
+        <p>A nova IA conta com ferramentas aprimoradas, incluindo:</p>
+
+        <ul>
+            <li><strong>Reasoning, Think e Big Brain:</strong> opções que ajustam o nível de profundidade do raciocínio, aumentando precisão ou velocidade das respostas.</li>
+            <li><strong>DeepSearch:</strong> mecanismo que analisa a internet e o X para fornecer resumos detalhados e contextualizados.</li>
+            <li><strong>Modo de voz:</strong> permitirá conversas por áudio com a IA, recurso previsto para ser liberado em uma semana.</li>
+        </ul>
+
+        <strong>Disponibilidade e assinatura</strong><br><br>
+
+        <p>O Grok 3 já está disponível para assinantes do X Premium+ e será liberado para outros usuários nos próximos dias. Musk também anunciou o SuperGrok, um plano exclusivo da IA por US$ 30/mês ou US$ 300/ano, oferecendo acesso antecipado a novidades, mais poder de raciocínio e geração de imagens ilimitada.</p>
+
+        <p>Nos próximos meses, a API da xAI será disponibilizada para empresas e o código do Grok 2 será aberto ao público.</p>
+
+        <p>Com essa nova aposta, Elon Musk busca fortalecer a xAI na disputa contra gigantes do setor, como OpenAI e Google.</p>
+    </div>
+</div>
+
+<!-- Modal 2 -->
+<div id="modal2" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Perplexity lança Deep Research, ferramenta de pesquisa com IA</h2>
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/02/perplexity-1920x1080.jpg" alt="Imagem representativa sobre o Deep Research da Perplexity AI">
+        
+        <p>A Perplexity AI anunciou o Deep Research, uma nova ferramenta de pesquisa baseada em inteligência artificial. O recurso promete fornecer respostas aprofundadas e fundamentadas em fontes confiáveis, com foco em áreas como finanças, marketing e pesquisa de produtos.</p>
+
+        <strong>Destaques do Deep Research</strong><br><br>
+
+        <ul>
+            <li>Disponível na web, com planos de expansão para Mac, iOS e Android.</li>
+            <li>Gera relatórios detalhados, que podem ser exportados em PDF ou compartilhados.</li>
+            <li>Utiliza pesquisa iterativa, refinando suas respostas conforme analisa novos dados.</li>
+            <li>Executa a maioria das tarefas em menos de três minutos.</li>
+        </ul>
+
+        <strong>Desempenho e concorrência</strong><br><br>
+
+        <p>Nos testes de benchmark, o Deep Research superou ferramentas como Gemini Thinking (Google) e GPT-4 (OpenAI), mas ainda ficou atrás do Deep Research da OpenAI. O grande diferencial apontado pela Perplexity é a velocidade e acessibilidade, tornando-se uma opção prática para usuários casuais, enquanto OpenAI e Google se destacam pela profundidade da análise e integração com outras plataformas.</p>
+
+        <p>O recurso está disponível gratuitamente, com limites diários para usuários não pagantes, enquanto assinantes possuem acesso ilimitado.</p>
+
+        <p>Com essa novidade, a Perplexity entra na disputa por espaço no mercado de ferramentas de pesquisa baseada em IA, competindo diretamente com gigantes do setor.</p>
+    </div>
+</div>
+
+<!-- Modal 3 -->
+<div id="modal3" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Google lança Whisk IA no Brasil e em mais de 100 países</h2>
+        <img src="https://tm.ibxk.com.br/2025/02/18/18200550051015.jpg?ims=1280x480" alt="Imagem representativa sobre o Whisk IA do Google">
+        
+        <p>O Google expandiu a disponibilidade do Whisk, sua ferramenta experimental de geração de imagens com inteligência artificial. Antes restrito aos EUA, o serviço agora pode ser acessado em mais de 100 países, incluindo o Brasil.</p>
+
+        <strong>Como funciona o Whisk IA?</strong><br><br>
+
+        <p>Diferente de geradores tradicionais, o Whisk utiliza uma abordagem multimodal:</p>
+
+        <ul>
+            <li>O usuário envia uma imagem para análise.</li>
+            <li>O modelo Gemini interpreta e descreve os elementos visuais.</li>
+            <li>O Imagen 3 gera uma nova versão da imagem com base nas instruções fornecidas pelo usuário.</li>
+        </ul>
+
+        <p>A ferramenta permite modificar assunto, ambiente e estilo, combinando diferentes imagens e descrições textuais.</p>
+
+        <strong>Acessibilidade e recursos</strong><br><br>
+
+        <ul>
+            <li>O Whisk é gratuito, mas requer login no Google Labs.</li>
+            <li>O processo de edição é simplificado, tornando-o acessível a usuários sem experiência na criação de prompts avançados.</li>
+            <li>Faz parte do Google Labs, que também oferece outras ferramentas experimentais, como o Daily Listen (notícias narradas por IA) e o NotebookLM (assistente para estudos).</li>
+        </ul>
+
+        <p>Com essa expansão, o Google reforça sua presença no mercado de geração de imagens, competindo com soluções como DALL·E e Stable Diffusion.</p>
+    </div>
+</div>
+
+<!-- Modal 4 -->
+<div id="modal4" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>OpenAI flexibiliza diretrizes do ChatGPT e reduz restrições</h2>
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/02/chatgpt_logo-1920x1080.jpg" alt="Imagem representativa sobre as novas diretrizes do ChatGPT">
+        
+        <p>A OpenAI anunciou mudanças em suas diretrizes, tornando o ChatGPT mais flexível em suas respostas e reduzindo restrições sobre temas sensíveis. A atualização, divulgada na última quarta-feira (12), busca promover a "liberdade intelectual", permitindo que o chatbot apresente múltiplas perspectivas sobre assuntos controversos.</p>
+
+        <strong>Principais mudanças</strong><br><br>
+
+        <ul>
+            <li><strong>Maior liberdade de resposta:</strong> o ChatGPT agora pode abordar temas polêmicos sem evitar questões ou tomar partido.</li>
+            <li><strong>Menos alertas de violação:</strong> usuários não serão mais notificados ao fazer perguntas que antes violavam as diretrizes.</li>
+            <li><strong>Possível impacto político e comercial:</strong> analistas especulam que a mudança pode estar relacionada a críticas sobre censura e à busca por uma melhor relação com o governo dos EUA.</li>
+        </ul>
+
+        <strong>Motivações da OpenAI</strong><br><br>
+
+        <p>A empresa vinha sendo criticada por possíveis vieses políticos em suas respostas. Embora negue que a mudança seja uma reação direta a essas críticas, o CEO Sam Altman já havia reconhecido a necessidade de ajustes para tornar o modelo mais neutro.</p>
+
+        <p>Especialistas apontam que essa abordagem amplia o debate sobre liberdade de expressão na IA, enquanto levanta preocupações sobre desinformação e discurso extremista. Empresas como Meta e X (Twitter) já adotaram diretrizes semelhantes, priorizando menor moderação de conteúdo.</p>
+
+        <p>A nova política da OpenAI representa um passo para tornar a IA mais aberta, mas também reacende desafios sobre segurança e responsabilidade na disseminação de informações.</p>
+    </div>
+</div>
+
+<!-- Modal 5 -->
+<div id="modal5" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Cientistas realizam primeiro teletransporte quântico entre computadores</h2>
+        <img src="https://t.ctcdn.com.br/hu_P5DKV3FvhquFtRq-uY8eAf80=/1024x576/smart/i982259.png" alt="Imagem representativa sobre o teletransporte quântico">
+        
+        <p>Pesquisadores da Universidade de Oxford deram um passo importante para a computação quântica ao realizarem, pela primeira vez, o teletransporte quântico entre computadores. O experimento mostrou que módulos críticos de um processador quântico podem ser distribuídos em diferentes máquinas, sem perda de desempenho.</p>
+
+        <strong>Como funciona o teletransporte quântico?</strong><br><br>
+
+        <p>O teletransporte quântico é baseado no emaranhamento, um fenômeno no qual duas partículas compartilham um estado quântico, independentemente da distância entre elas. No experimento, os cientistas transferiram informações quânticas entre processadores separados, sem a necessidade de sinais elétricos tradicionais.</p>
+
+        <p>Em vez disso, os dados foram enviados através de fótons em fibra óptica, transportando portões lógicos, os blocos fundamentais da computação quântica. Isso permite que processadores quânticos distantes funcionem como um único supercomputador interligado.</p>
+
+        <strong>Avanço para a internet quântica</strong><br><br>
+
+        <p>Esse experimento representa um passo rumo à internet quântica, onde computadores compartilhariam informações de forma segura e ultrarrápida. Para testar a eficiência do teletransporte, os cientistas rodaram o algoritmo de busca de Grover, demonstrando vantagens significativas sobre buscas convencionais.</p>
+
+        <p>A pesquisa abre caminho para computadores quânticos mais poderosos e redes altamente seguras, aproximando a tecnologia da aplicação prática em larga escala.</p>
+    </div>
+</div>
+
+<!-- Modal 6 -->
+<div id="modal6" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Arm lançará seu próprio chip e pode transformar a indústria de semicondutores</h2>
+        <img src="https://f.i.uol.com.br/fotografia/2025/02/13/173948782867ae7a540875d_1739487828_3x2_lg.jpg" alt="Imagem representativa sobre o novo chip da Arm">
+        
+        <p>A Arm anunciou que lançará seu próprio chip ainda este ano, marcando uma mudança radical em seu modelo de negócios. Tradicionalmente, a empresa licenciava seus designs para gigantes como Apple, Qualcomm e Nvidia, mas agora produzirá seu próprio processador completo.</p>
+
+        <strong>Impacto no mercado de semicondutores</strong><br><br>
+
+        <ul>
+            <li>O novo chip será uma CPU para servidores em data centers, com possibilidade de personalização para clientes como a Meta.</li>
+            <li>A fabricação será terceirizada para fabricantes como a TSMC.</li>
+            <li>A Arm, que faz parte do SoftBank, está negociando a compra da Ampere, uma desenvolvedora de chips baseada em arquitetura Arm, em um negócio estimado em US$ 6,5 bilhões.</li>
+        </ul>
+
+        <strong>Arm no centro da revolução da IA</strong><br><br>
+
+        <p>A decisão faz parte de um plano maior do SoftBank para expandir sua presença na infraestrutura de inteligência artificial. A Arm já é um parceiro-chave do projeto Stargate, iniciativa da OpenAI e da Microsoft para construir um ecossistema avançado de IA, com investimentos de US$ 500 bilhões.</p>
+
+        <p>Além disso, a Arm está se tornando essencial para empresas como a Meta, que busca reduzir a dependência de Intel e AMD para seus chips de servidor.</p>
+
+        <strong>Possíveis conflitos com clientes</strong><br><br>
+
+        <p>O movimento coloca a Arm em um possível conflito de interesses com empresas que utilizam sua tecnologia, como Qualcomm e Nvidia. A Qualcomm, por exemplo, já está em disputa judicial com a Arm sobre os termos de licenciamento.</p>
+
+        <p>Com essa iniciativa, a Arm pode se tornar um dos grandes concorrentes no setor de semicondutores, desafiando o domínio de empresas tradicionais e consolidando seu papel na revolução da IA.</p>
+    </div>
+</div>
+
+<!-- Modal 7 -->
+<div id="modal7" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Pesquisadores chineses descobrem método para prolongar a vida útil das baterias</h2>
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2024/12/bateria-carro-eletrico-1536x868.jpg" alt="Imagem representativa sobre a nova tecnologia de baterias">
+        
+        <p>Cientistas da Universidade Fudan, na China, desenvolveram uma nova técnica que pode aumentar drasticamente a durabilidade das baterias de íon-lítio, utilizadas em carros elétricos e dispositivos eletrônicos.</p>
+
+        <strong>Como funciona a inovação?</strong><br><br>
+
+        <p>A descoberta envolve a injeção de uma solução de sal de lítio orgânico em baterias descarregadas. Esse processo restaura íons antes inutilizáveis, permitindo que a bateria volte a operar com maior eficiência.</p>
+
+        <strong>Principais benefícios</strong><br><br>
+
+        <ul>
+            <li><strong>Extensão do ciclo de vida:</strong> o método pode aumentar a durabilidade da bateria de 500 a 60 mil ciclos de carga, um avanço significativo.</li>
+            <li><strong>Processo repetível:</strong> a técnica pode ser aplicada diversas vezes, aumentando ainda mais a longevidade da bateria.</li>
+            <li><strong>Solução para o descarte de baterias:</strong> na China, estima-se que 3,5 milhões de baterias sejam descartadas anualmente até 2030, tornando essa inovação essencial para reduzir o impacto ambiental.</li>
+        </ul>
+
+        <p>A descoberta pode revolucionar o setor de energia renovável e mobilidade elétrica, tornando os veículos elétricos mais eficientes, sustentáveis e acessíveis.</p>
+    </div>
+</div>
+
+<!-- Modal 8 -->
+<div id="modal8" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Ex-CEO do Google alerta para uso malicioso da IA por governos e terroristas</h2>
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/02/IA-perigo-1920x1080.jpg" alt="Imagem representativa sobre os riscos da IA segundo Eric Schmidt">
+        
+        <p>O ex-CEO do Google, Eric Schmidt, expressou preocupações sobre o uso indevido da inteligência artificial (IA), alertando que países como Coreia do Norte, Irã e Rússia poderiam empregar a tecnologia para fins destrutivos, como o desenvolvimento de armas biológicas.</p>
+
+        <strong>Principais pontos do alerta</strong><br><br>
+
+        <ul>
+            <li><strong>Risco de terrorismo:</strong> Schmidt teme que grupos extremistas utilizem IA para realizar ataques devastadores, comparando a ameaça com eventos como os atentados de 11 de setembro.</li>
+            <li><strong>Uso militar e geopolítico:</strong> regimes autoritários poderiam explorar IA para armamentos avançados e operações cibernéticas hostis.</li>
+            <li><strong>Regulação e inovação:</strong> ele apoia medidas do governo dos EUA que restringem a exportação de microchips avançados para adversários, mas alerta que regulamentações excessivas podem frear a inovação no setor.</li>
+        </ul>
+
+        <strong>Impacto social da IA</strong><br><br>
+
+        <p>Além das preocupações com segurança global, Schmidt também abordou o impacto da tecnologia no uso excessivo de smartphones por crianças, defendendo restrições ao acesso de menores às redes sociais.</p>
+
+        <p>O debate sobre o equilíbrio entre avanço tecnológico, segurança e liberdade de inovação continua, à medida que a IA se torna cada vez mais influente no cenário global.</p>
+    </div>
+</div>
+
+<!-- Modal 9 -->
+<div id="modal9" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Sedentarismo digital pode impactar a saúde mental dos jovens, aponta estudo</h2>
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/02/Capa-Videogame-1920x1000.jpg" alt="Imagem representativa sobre os impactos do sedentarismo digital">
+        
+        <p>Uma pesquisa do King’s College London revelou que adolescentes que passam mais de três horas diárias em atividades sedentárias, como videogames e redes sociais, apresentam maior risco de sofrimento psicológico aos 17 anos. O estudo sugere que não é apenas o conteúdo consumido, mas o tempo sem movimento e interação que pode afetar a saúde mental.</p>
+
+        <strong>Nem toda tela é prejudicial</strong><br><br>
+
+        <p>Outro estudo, liderado por André de Oliveira Werneck (USP), mostrou que nem todas as atividades sedentárias têm o mesmo impacto. O tempo gasto com tarefas escolares ou aprendizado online não apresentou efeitos negativos, enquanto o uso excessivo de redes sociais e jogos esteve associado a piora no bem-estar emocional.</p>
+
+        <strong>Como reduzir os impactos?</strong><br><br>
+
+        <ul>
+            <li>Limitar o tempo de lazer em telas para até três horas diárias.</li>
+            <li>Incentivar atividades físicas e interações sociais.</li>
+            <li>Adaptar estratégias por gênero: meninas são mais afetadas pelo uso excessivo da internet, enquanto meninos sofrem maior impacto com videogames.</li>
+        </ul>
+
+        <p>Essas descobertas reforçam a importância de equilibrar o uso da tecnologia com hábitos saudáveis, garantindo um desenvolvimento mental e social mais positivo para os jovens.</p>
+    </div>
+</div>
+
+<!-- Modal 10 -->
+<div id="modal10" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Nova Alexa com IA enfrenta atrasos devido a respostas imprecisas</h2>
+        <img src="https://tm.ibxk.com.br/2025/02/17/17092843444055.jpg?ims=1280x480" alt="Imagem representativa sobre a nova Alexa com IA">
+        
+        <p>A Amazon deve anunciar a nova versão da Alexa com inteligência artificial (IA) em 26 de fevereiro de 2025, mas sua disponibilização pode ser adiada para o final de março. Segundo fontes internas, o principal motivo do atraso são respostas incorretas fornecidas pela assistente durante testes, gerando preocupações sobre sua confiabilidade.</p>
+
+        <strong>O que esperar da nova Alexa?</strong><br><br>
+
+        <p>A assistente contará com:</p>
+
+        <ul>
+            <li><strong>Personalidade customizável</strong> para conversas mais naturais.</li>
+            <li><strong>Memória aprimorada</strong>, permitindo que lembre informações para interações futuras.</li>
+            <li><strong>Execução de tarefas complexas</strong>, como pedidos de comida via delivery ou chamadas de transporte por aplicativo.</li>
+        </ul>
+
+        <p>A Amazon pretende transformar a Alexa em uma IA agêntica, com maior autonomia para executar comandos sem intervenção humana. No entanto, dificuldades técnicas vêm atrasando o projeto, enquanto concorrentes como ChatGPT e Google Gemini avançam rapidamente no setor.</p>
+
+        <p>A expectativa agora é pela confirmação da nova data de lançamento e detalhes sobre um possível modelo de assinatura, que pode tornar algumas funções premium.</p>
+    </div>
+</div>
+
+<!-- Modal 11 -->
+<div id="modal11" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Intel pode ser dividida entre Broadcom e TSMC em possível venda</h2>
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/01/intel-1920x1080.jpg" alt="Imagem representativa sobre a possível venda da Intel">
+        
+        <p>A Intel, gigante dos semicondutores, enfrenta uma crise prolongada e se tornou alvo de possíveis aquisições por parte de Broadcom e TSMC, segundo informações do Wall Street Journal.</p>
+
+        <strong>Interesse de Broadcom e TSMC</strong><br><br>
+
+        <ul>
+            <li><strong>Broadcom</strong> considera comprar a divisão de design e marketing de chips da Intel, mas busca um parceiro para a parte de fabricação.</li>
+            <li><strong>TSMC</strong> avalia adquirir algumas ou todas as fábricas da Intel, possivelmente em um consórcio de investidores.</li>
+            <li>As duas empresas, que são rivais entre si e da Intel, não estão negociando juntas.</li>
+        </ul>
+
+        <strong>Intel e os desafios no mercado</strong><br><br>
+
+        <p>Apesar de seu histórico de liderança no setor, a Intel perdeu terreno para concorrentes como a TSMC na fabricação de chips avançados. Além disso, sua separação interna entre a gestão das fábricas e o restante da companhia levanta dúvidas sobre uma possível reestruturação ou venda.</p>
+
+        <p>O governo dos EUA, que vê a Intel como essencial para a segurança nacional, acompanha a situação de perto. Embora a administração Trump tenha incentivado a TSMC a estudar um possível acordo, há resistência quanto à entrega do controle da Intel a uma empresa estrangeira, dado o cenário geopolítico sensível com Taiwan e China.</p>
+
+        <p>Se concretizada, a venda pode dividir o mercado de chips entre Broadcom e TSMC, reconfigurando a dinâmica global da indústria de semicondutores.</p>
+    </div>
+</div>
+
+<!-- Modal 12 -->
+<div id="modal12" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Evangelistas da IA chegam ao Brasil com promessas de revolução tecnológica</h2>
+        <img src="https://f.i.uol.com.br/fotografia/2025/01/09/1736441429677ffe5595bb4_1736441429_3x2_lg.jpg" alt="Imagem representativa sobre os movimentos de IA no Brasil">
+        
+        <p>Movimentos ligados à inteligência artificial (IA), como aceleracionismo e transhumanismo, estão ganhando espaço no Brasil. Esses conceitos, populares no Vale do Silício, defendem o avanço acelerado da tecnologia como solução para problemas globais e até a possibilidade de superar limitações biológicas humanas.</p>
+
+        <strong>Principais ideias em debate</strong><br><br>
+
+        <ul>
+            <li><strong>Aceleracionismo:</strong> defende que a tecnologia resolverá crises globais, como mudanças climáticas, por meio de soluções como geoengenharia.</li>
+            <li><strong>Altruísmo efetivo:</strong> propõe decisões baseadas exclusivamente em dados, sem influência de leis ou emoções.</li>
+            <li><strong>Transhumanismo:</strong> prevê a fusão entre humanos e IA, permitindo a extensão da vida e superação da morte.</li>
+        </ul>
+
+        <strong>Influência crescente no Brasil</strong><br><br>
+
+        <p>Grupos como AI Brasil e Abria (Associação Brasileira de Inteligência Artificial) têm ampliado sua presença no país, participando de debates legislativos e empresariais sobre regulamentação da IA. Algumas dessas iniciativas foram influenciadas pela Singularity University, instituição fundada por Ray Kurzweil, um dos pioneiros da IA.</p>
+
+        <p>Durante palestras e eventos, defensores dessas ideologias argumentam que a IA será essencial para decisões políticas e econômicas, podendo até integrar conselhos administrativos e parlamentos no futuro.</p>
+
+        <strong>Críticas e desafios</strong><br><br>
+
+        <p>Apesar do entusiasmo, especialistas alertam para os riscos do "dataísmo", a crença cega em dados e algoritmos, o que poderia comprometer princípios éticos e democráticos. Além disso, a regulação da IA no Brasil segue em debate, com setores pressionando por menos restrições para impulsionar a competitividade global.</p>
+
+        <p>Enquanto essas visões se expandem, o país se vê diante do desafio de equilibrar avanço tecnológico, ética e impacto social, garantindo que a IA seja uma ferramenta de progresso sem comprometer valores fundamentais.</p>
+    </div>
+</div>
+
+<!-- Modal 13 -->
+<div id="modal13" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Microsoft lança Majorana 1, chip quântico que pode revolucionar a tecnologia</h2>
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/02/Majorana-1-009-4000px-1920x1080.jpg" alt="Imagem representativa sobre o chip quântico Majorana 1 da Microsoft">
+        
+        <p>A Microsoft anunciou o Majorana 1, seu novo chip quântico, que utiliza qubits topológicos para alcançar maior estabilidade e escalabilidade. O avanço pode permitir a construção de computadores quânticos mais poderosos, capazes de resolver problemas complexos em diversas indústrias.</p>
+
+        <strong>O que torna o Majorana 1 especial?</strong><br><br>
+
+        <ul>
+            <li><strong>Topocondutor:</strong> um material inovador que possibilita a manipulação das partículas de Majorana, fundamentais para criar qubits mais confiáveis.</li>
+            <li><strong>Escalabilidade para 1 milhão de qubits:</strong> um marco essencial para tornar a computação quântica viável em larga escala.</li>
+            <li><strong>Correção de erros eficiente:</strong> o controle digital dos qubits simplifica a manutenção da estabilidade, um dos principais desafios da computação quântica.</li>
+        </ul>
+
+        <strong>Possíveis aplicações</strong><br><br>
+
+        <p>A Microsoft prevê que a computação quântica, combinada com IA, poderá transformar áreas como:</p>
+
+        <ul>
+            <li><strong>Ciência dos materiais:</strong> desenvolvimento de materiais autorreparáveis e mais resistentes.</li>
+            <li><strong>Meio ambiente:</strong> descoberta de catalisadores para a decomposição de poluentes, como microplásticos.</li>
+            <li><strong>Saúde e agricultura:</strong> otimização de processos biológicos para avanços médicos e agrícolas.</li>
+        </ul>
+
+        <strong>O futuro da computação quântica</strong><br><br>
+
+        <p>O Majorana 1 marca um passo significativo na busca por um computador quântico tolerante a falhas, um projeto que já recebeu reconhecimento da DARPA, agência de defesa dos EUA. Agora, a Microsoft foca na produção em escala, garantindo que essa tecnologia avance para aplicações práticas.</p>
+
+        <p>Se bem-sucedido, o Majorana 1 pode colocar a Microsoft na liderança da corrida quântica, acelerando descobertas e transformando a computação como a conhecemos.</p>
+    </div>
+</div>
+
+
+
+  <!-- Rodapé -->
+  <footer>
+    <p>&copy; 2024 - 2025</p>
+  </footer>
+
+  <!-- Scripts para Modais -->
+  <script>
+    // Seleciona todos os cartões, modais e botões de fechamento
+    const cards = document.querySelectorAll('.card');
+    const modals = document.querySelectorAll('.modal');
+    const closes = document.querySelectorAll('.close');
+
+    // Verifica se a quantidade de cartões e modais corresponde
+    if (cards.length !== modals.length) {
+      console.warn("O número de cartões não corresponde ao número de modais. Verifique seu HTML.");
+    }
+
+    // Adiciona evento de clique aos cartões para abrir o modal correspondente
+    cards.forEach((card, index) => {
+      card.addEventListener('click', () => {
+        if (modals[index]) {
+          modals[index].style.display = 'block'; // Exibe o modal correspondente
+        } else {
+          console.error(`Nenhum modal encontrado para o card com índice ${index}. Verifique o HTML.`);
+        }
+      });
+    });
+
+    // Adiciona evento de clique aos botões de fechamento para fechar o modal correspondente
+    closes.forEach((close, index) => {
+      close.addEventListener('click', () => {
+        if (modals[index]) {
+          modals[index].style.display = 'none'; // Esconde o modal correspondente
+        } else {
+          console.error(`Nenhum modal encontrado para o botão de fechamento com índice ${index}. Verifique o HTML.`);
+        }
+      });
+    });
+
+    // Adiciona funcionalidade para fechar o modal ao clicar fora dele
+    window.onclick = function (event) {
+      modals.forEach((modal) => {
+        if (event.target === modal) {
+          modal.style.display = 'none'; // Esconde o modal se o clique for fora do conteúdo
+        }
+      });
+    };
+
+    // Adiciona acessibilidade: fecha o modal ao pressionar a tecla ESC
+    window.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') { // Detecta a tecla ESC
+        modals.forEach((modal) => {
+          modal.style.display = 'none'; // Esconde todos os modais abertos
+        });
+      }
+    });
+  </script>
+</body>
+</html>
